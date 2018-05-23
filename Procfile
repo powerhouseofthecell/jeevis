@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT jeevis.wsgi:application
+web: python3 jeevis/manage.py runserver 0.0.0.0:$PORT
