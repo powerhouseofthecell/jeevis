@@ -1,0 +1,235 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Jeevis</title>
+    <meta name="description" content="A visualizer for common graph traversal algorithms.">
+    <meta name="author" content="Nicholas Wong">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <!-- script
+    ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="{% static 'js/modernizr.js' %}"></script>
+    <script src="{% static 'js/pace.min.js' %}"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'misc/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'img/safari-pinned-tab.svg' %}" color="#7b5bd5">
+    
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body id="top">
+
+    <!-- header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="header-logo">
+            <a class="site-logo" href="index.html">
+                <img src="{% static 'img/logo.svg' %}" alt="Homepage">
+            </a>
+        </div> <!-- end header-logo -->
+
+        <nav class="header-nav">
+
+            <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
+
+            <div class="header-nav__content">
+                <h3>Jeevis</h3>
+                
+                <ul class="header-nav__list">
+                    <li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
+                    <li><a class="smoothscroll"  href="#bfs" title="bfs">BFS</a></li>
+                </ul>
+    
+                <p>
+                    An online tool for generating graphs (or picking from presets) and using common algorithms to explore their properties.
+                </p>
+
+            </div> <!-- end header-nav__content -->
+
+        </nav> <!-- end header-nav -->
+
+        <a class="header-menu-toggle" href="#0">
+            <span class="header-menu-icon"></span>
+        </a>
+
+    </header> <!-- end s-header -->
+
+
+    <!-- home
+    ================================================== -->
+    <section id="home" class="s-home target-section" data-parallax="scroll" data-image-src="https://media.giphy.com/media/xT9IgN8YKRhByRBzMI/source.gif" data-natural-width=3000 data-natural-height=2000 data-position-y=top>
+
+        <div class="shadow-overlay"></div>
+
+        <div class="home-content">
+
+            <div class="row home-content__main">
+                <h1>
+                    Welcome
+                </h1>
+
+                <p>
+                    This is a site built to play around with graph algorithms
+                </p>
+            </div> <!-- end home-content__main -->
+
+        </div> <!-- end home-content -->
+
+        <ul class="home-sidelinks">
+            <li><a class="smoothscroll" href="#bfs">BFS<span>Breadth First Search</span></a></li>
+        </ul> <!-- end home-sidelinks -->
+
+        <a href="#bfs" class="home-scroll smoothscroll">
+            <span class="home-scroll__text">Scroll Down</span>
+            <span class="home-scroll__icon"></span>
+        </a> <!-- end home-scroll -->
+
+    </section> <!-- end s-home -->
+
+
+    <!-- bfs
+    ================================================== -->
+    <section id='bfs' class="s-about">
+
+        <div class="row section-header" data-aos="fade-up">
+            <div class="col-full">
+                <h3 class="subhead">BFS - Breadth First Search</h3>
+                <h1 class="display-1">Traversal Algorithm</h1>
+                <p>
+                    Given a starting node, find its children, then explore each of them before exploring their children. Below is a randomly generated graph. If you click one of the nodes, you will see BFS performed in slow motion. 
+                </p>
+            </div>
+        </div> <!-- end section-header -->
+
+        <div class="row" data-aos="fade-up">
+            <div class="col-full" align="center" style="width: 100%;">
+                <div class="row" data-aos="fade-up">
+                    <p id="bfs_text"></p>
+                    <button class="btn" onclick="getGraph('random');">Random</button>
+                    <button class="btn" onclick="getGraph('pyramid');">Pyramid</button>
+                    <button class="btn" onclick="getGraph('circle');">Circle</button>
+                </div>
+                
+                <div class="row" data-aos="fade-up">
+                    <input id="bfs-slider" class="slider" type="range" min="0.5" max="8.0" value="1.0" step="0.5"/>
+                </div>
+               
+                <div class="row" data-aos="fade-up">
+                        <div id="bfs-canvas" class="graph-canvas"></div>
+                </div>
+            </div>
+        </div> <!-- end about-desc -->
+
+        <div class="row">
+                
+            <div class="about-process process block-1-2 block-tab-full">
+
+                <div class="process__vline-left"></div>
+                <div class="process__vline-right"></div>
+
+                <div class="col-block process__col" data-item="1" data-aos="fade-up">
+                    <div class="process__text">
+                        <h4>How it works</h4>
+
+                        <p>
+                            Starting at an arbitrary node, BFS goes by "breadth," meaning that the algorithm adds each of the node's children to its list of nodes to search (often a queue). It then pulls the next node from this queue or list and does the same. It runs until this list of nodes to check is empty. 
+                        </p>
+                    </div>
+                </div>
+                <div class="col-block process__col" data-item="2" data-aos="fade-up">
+                    <div class="process__text">
+                        <h4>What is it used for?</h4>
+
+                        <p>
+                            One of the major uses is for answering the question of "what nodes are visitable from this node?" The list of all visited nodes at the completion of the algorithm answers this question. Additionally, with a small modification to the original algorithm, it is easy to determine a path between any 2 nodes and further the length of this path.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-block process__col" data-item="3" data-aos="fade-up">
+                    <div class="process__text">
+                        <h4>Distance</h4>
+
+                        <p>
+                            Click the below button to add a distance tracking component to the above BFS algorithm. This is an important use for the algorithm, though imagine: what happens if there are negative edge lengths that form a cycle, allowing a traversal to infinitely decrease the length of the path? How would you deal with this?
+                        </p>
+
+                        <button class="btn" onclick="addBFSDistance();">Distance</button>
+                    </div>
+                </div>
+                <div class="col-block process__col" data-item="4" data-aos="fade-up">
+                    <div class="process__text">
+                        <h4>Path</h4>
+
+                        <p>
+                            So BFS can tell you if there exists a path between nodes, but is this useful if you don't know the path itself? While yes, it is useful to know merely the existence of a path, if we imagine a scenario where if there exists a path, then we also want to know the path itself, how would you modify the algorithm outlined above? How could you keep track of the path as the algorithm runs?
+                        </p>
+                    </div>
+                </div>
+
+            </div> <!-- end process -->
+
+        </div> <!-- end about-stats -->
+
+    </section> <!-- end s-about -->
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">            
+        </div>
+    </div>
+
+
+    <!-- JS
+    ================================================== -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Including D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- D3 Force Directed Graphs Code -->
+    <script src="http://d3js.org/d3-selection-multi.v1.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
+    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+    <script src="https://d3js.org/d3-force.v1.min.js"></script>
+    <!-- End Force Directed Graphs Scripts -->
+
+    <! -- D3 Zooming -->
+    <script src="https://d3js.org/d3-zoom.v1.min.js"></script>
+    <!-- End D3 Zooming -->
+
+    <!-- Graph Scripts -->
+    <script src="{% static 'js/bfs.js' %}"></script>
+
+</body>
+
+</html>

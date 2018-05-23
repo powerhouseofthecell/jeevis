@@ -1,0 +1,18 @@
+.graph-canvas {
+    width: auto;
+    height: 700px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.node circle {
+    fill: #ccc;
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+.link {
+    stroke: #aaa;
+    stroke-opacity: 1.0;
+    stroke-width: 2px;
+}
